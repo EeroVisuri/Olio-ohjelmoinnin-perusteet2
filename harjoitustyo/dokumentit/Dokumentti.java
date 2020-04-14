@@ -24,7 +24,7 @@ public abstract class Dokumentti implements Comparable <Dokumentti>, Tietoinen <
 		
 	}
 	
-	
+	//parametrillinen rakentaja
 	public Dokumentti(int tunniste, String teksti) throws IllegalArgumentException {
 		if (tunniste <= 0 || teksti == null || teksti.length() <= 0) {
 			throw new IllegalArgumentException();

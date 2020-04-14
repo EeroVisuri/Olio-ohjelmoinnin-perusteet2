@@ -6,28 +6,32 @@ import java.lang.reflect.Constructor;
 import java.util.LinkedList;
 
 public class Vitsi extends Dokumentti {
-	private String laji;
 	
+	//attribuutti
+	private String laji;
+	//aksessori
 	public String laji() {
 		return laji;
 	}
-	
-	public void laji (String uusilaji) {
-		if (uusilaji != null || uusilaji.length() <= 0) {
-			laji = uusilaji;
+	//laji ei saa olla null tai tyhjä merkkijono
+	public void laji (String laji) {
+		if (laji != null || laji.length()<= 0) {
+			this.laji = laji;
 		}
 	}
+	
+	
 
-	@Override
-	public boolean sanatTäsmäävät(LinkedList<String> hakusanat) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public void siivoa(LinkedList<String> sulkusanat, String välimerkit) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public boolean sanatTäsmäävät(LinkedList<String> hakusanat) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	
