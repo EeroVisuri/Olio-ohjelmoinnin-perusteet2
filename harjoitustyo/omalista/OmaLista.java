@@ -6,14 +6,10 @@ import harjoitustyo.apulaiset.Ooperoiva;
 
 public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
 
+    @Override
+    public void lisää(E uusi) throws IllegalArgumentException {
+        super.add(uusi);
 
-
-
-
-	@Override
-	public void lisää(E uusi) throws IllegalArgumentException {
-		super.add(uusi);
-		
-	}
+    }
 
 }
