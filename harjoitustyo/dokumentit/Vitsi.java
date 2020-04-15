@@ -23,7 +23,7 @@ public class Vitsi extends Dokumentti {
             throw new IllegalArgumentException("Vitsin laji virheellinen");
         }
     }
-    
+    //ölölölö
     /*
      * Konstruktori
      */

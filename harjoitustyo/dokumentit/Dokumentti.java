@@ -25,11 +25,11 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
     public int tunnite() {
         return tunniste;
     }
-
+    //getteri
     public String teksti() {
         return teksti;
     }
-
+    //setteri
     public void tunniste(int tunniste) {
         if (tunniste > 0) {
             this.tunniste = tunniste;
@@ -37,7 +37,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
             throw new IllegalArgumentException();
         }
     }
-
+    //setteri
     public void teksti(String teksti) {
         if (teksti != null) {
             this.teksti = teksti;
