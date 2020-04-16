@@ -1,3 +1,9 @@
+/* eero.visuri@tuni.fi
+ * OOPE2 - Olio-ohjelmoinnin perusteet 2
+ * Harjoitustyö
+ */
+
+
 package harjoitustyo.dokumentit;
 
 import java.time.*;

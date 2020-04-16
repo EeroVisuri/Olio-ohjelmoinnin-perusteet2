@@ -1,3 +1,8 @@
+/* eero.visuri@tuni.fi
+ * OOPE2 - Olio-ohjelmoinnin perusteet 2
+ * Harjoitustyö
+ */
+
 package harjoitustyo;
 
 import java.util.Scanner;

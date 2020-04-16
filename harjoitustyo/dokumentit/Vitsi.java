@@ -1,3 +1,9 @@
+/* eero.visuri@tuni.fi
+ * OOPE2 - Olio-ohjelmoinnin perusteet 2
+ * Harjoitustyö
+ */
+
+
 package harjoitustyo.dokumentit;
 
 //import java.lang.reflect.Constructor;
@@ -14,7 +20,7 @@ public class Vitsi extends Dokumentti {
         return laji;
     }
 
-    // laji ei saa olla null tai tyhjä merkkijono
+    // laji ei saa olla null tai tyhjä merkkijono, jos on, heitetään error.
     public void laji(String laji) {
         if (laji == null || laji.length() <= 0) {
             this.laji = laji;
@@ -23,10 +29,11 @@ public class Vitsi extends Dokumentti {
             throw new IllegalArgumentException("Vitsin laji virheellinen");
         }
     }
-    //ölölölö
+    
     /*
-     * Konstruktori
+     * Rakentaja, joka kutsuu yläluokan rakentajaa ja Vitsi-luokan setteriä. Molemmissa virheentarkistus.
      */
+    
     
     public Vitsi(int tunniste, String teksti, String laji) throws IllegalArgumentException {
         super(tunniste, teksti);
