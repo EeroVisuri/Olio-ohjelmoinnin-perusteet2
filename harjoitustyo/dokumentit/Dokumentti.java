@@ -123,7 +123,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
             throw new IllegalArgumentException("Hakusanat joko null tai koko <= 0");
         }
 
-        boolean sanatsamat = false;
+        boolean sanatlöytyi = true;
 
         
         
@@ -132,14 +132,11 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
              * Haetaan _vain_ välilyöntien välissä olevia sanoja, ettei saada osittaisista sanoista
              * true-paluuarvoja.
              */
-            if (teksti.contains(" " + hakusanat.get(i)+" ")) {
-                sanatsamat = true;
-                continue;
-            } else {
-                return sanatsamat;
+            if (!(teksti.contains(" " + hakusanat.get(i)+" "))) {
+                return false;
             }
         }
-        return sanatsamat;
+        return sanatlöytyi;
     }
     
     /*
