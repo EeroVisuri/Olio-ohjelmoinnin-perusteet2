@@ -117,7 +117,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
      */
 
     public boolean sanatTäsmäävät(LinkedList<String> hakusanat, String teksti) throws IllegalArgumentException {
-
+        //virheentarkistus
         if (hakusanat == null || hakusanat.size() <= 0) {
             throw new IllegalArgumentException("Hakusanat joko null tai koko <= 0");
         }
@@ -134,5 +134,39 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         }
         return sanatsamat;
     }
+    
+    /*
+     * Metodi poistaa ensin dokumentin tekstistä kaikki annetut välimerkit ja
+     * muuntaa sitten kaikki kirjainmerkit pieniksi ja poistaa lopuksi kaikki
+     * sulkusanojen esiintymät.
+     */
+    @Override
+    public void siivoa(LinkedList<String> sulkusanat, String välimerkit)
+        throws IllegalArgumentException {
+        //virheentarkistus
+        if (sulkusanat == null || välimerkit == null || 
+                välimerkit.length() <= 0 || sulkusanat.size() <= 0) {
+            throw new IllegalArgumentException("Siivoa-metodin virheelliset sulkusanat/välimerkit!");
+        
+        }
+        //poistetaan annetut välimerkit tekstistä
+        for (int i = 0; i < välimerkit.length(); i++) {
+           char merkki = välimerkit.charAt(i);
+           teksti = teksti.replace(merkki, Character.MIN_VALUE );
+        }
+            
+        
+        //muutetaan koko teksti pieniksi kirjaimiksi
+        teksti = teksti.toLowerCase();
+        
+        //jos tekstistä löytyy sulkusanoja, poistetaan ne.
+        for (int i = 0; i < sulkusanat.size(); i++) {
+            teksti = teksti.replaceAll(sulkusanat.get(i), ""); 
+                
+        }
+       
+        
+    }
 
 }
+
