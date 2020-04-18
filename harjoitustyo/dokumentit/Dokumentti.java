@@ -147,7 +147,8 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         //virheentarkistus
         if (sulkusanat == null || välimerkit == null || 
                 välimerkit.length() <= 0 || sulkusanat.size() <= 0) {
-            throw new IllegalArgumentException("Siivoa-metodin virheelliset sulkusanat/välimerkit!");
+            throw new IllegalArgumentException("Siivoa-metodin virheelliset "
+                    + "sulkusanat/välimerkit!");
         
         }
         //poistetaan annetut välimerkit tekstistä

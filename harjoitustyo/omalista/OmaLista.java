@@ -11,6 +11,11 @@ import harjoitustyo.dokumentit.Dokumentti;
 
 public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
     
+    public class Kokoelma {
+
+    }
+
+    //Hiljennetään 
     @SuppressWarnings("unchecked")
     
     /*
