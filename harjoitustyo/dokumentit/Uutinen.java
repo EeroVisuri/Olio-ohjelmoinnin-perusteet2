@@ -10,12 +10,13 @@ import java.time.*;
 import java.util.LinkedList;
 
 public class Uutinen extends Dokumentti {
+    //kätketty attribuutti
     private LocalDate päivämäärä;
-
+    //getteri
     public LocalDate päivämäärä() {
         return päivämäärä;
     }
-
+    //setteri
     public void päivämäärä(LocalDate päivämäärä) {
         if (päivämäärä != null) {
             this.päivämäärä = päivämäärä;
@@ -24,27 +25,19 @@ public class Uutinen extends Dokumentti {
             throw new IllegalArgumentException("Uutisen pvm virheellinen.");
         }
     }
-    
+    //rakentaja, virheentarkistus yliluokan rakentajassa ja setterissä.
     public Uutinen (int tunniste, LocalDate päivämäärä, String teksti) {
         super(tunniste, teksti);
         päivämäärä(päivämäärä);
     }
 
+ 
+
+
+    //korvattu toString()-metodi
     @Override
-    public boolean sanatTäsmäävät(LinkedList<String> hakusanat) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
-        return false;
+    public String toString() {
+        String s = super.toString();
+        return s.replace("///", "///" + päivämäärä + "///");
     }
-
-    @Override
-    public void siivoa(LinkedList<String> sulkusanat, String välimerkit) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
-
-    }
-
-    // @Override
-    // public String toString() {
-    // String original = super.toString();
-    // return original.replace("///", "///" + päivämäärä + "///");
-    // }
 }

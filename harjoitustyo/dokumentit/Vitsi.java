@@ -3,7 +3,6 @@
  * Harjoitustyö
  */
 
-
 package harjoitustyo.dokumentit;
 
 //import java.lang.reflect.Constructor;
@@ -30,32 +29,23 @@ public class Vitsi extends Dokumentti {
         }
     }
     
+    
     /*
-     * Rakentaja, joka kutsuu yläluokan rakentajaa ja Vitsi-luokan setteriä. Molemmissa virheentarkistus.
+     * Rakentaja, joka kutsuu yläluokan rakentajaa ja Vitsi-luokan setteriä. Molemmissa 
+     * virheentarkistus isessään.
      */
-    
-    
+        
     public Vitsi(int tunniste, String teksti, String laji) throws IllegalArgumentException {
         super(tunniste, teksti);
         laji(laji);
     }
-
     
     
-
+    //korvattu toString()-metodi.
     @Override
-    public void siivoa(LinkedList<String> sulkusanat, String välimerkit) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
-
+    public String toString() {
+        String s = super.toString();
+        return s.replace("///", "///" + laji + "///");
     }
-
-    @Override
-    public boolean sanatTäsmäävät(LinkedList<String> hakusanat) throws IllegalArgumentException {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    // korvaa toString ketjuttaen superia käyttäen vissiin
-    //
 
 }

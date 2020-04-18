@@ -115,8 +115,9 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
      * ensimmäisenä parametrinaan saatuja hakusanoja, jos se löytää hakusanat
      * tekstistä, se palauttaa true, muuten false.
      */
-
-    public boolean sanatTäsmäävät(LinkedList<String> hakusanat, String teksti) throws IllegalArgumentException {
+    
+    @Override
+    public boolean sanatTäsmäävät(LinkedList<String> hakusanat) throws IllegalArgumentException {
         //virheentarkistus
         if (hakusanat == null || hakusanat.size() <= 0) {
             throw new IllegalArgumentException("Hakusanat joko null tai koko <= 0");

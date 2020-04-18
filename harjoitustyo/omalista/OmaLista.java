@@ -1,3 +1,8 @@
+/* eero.visuri@tuni.fi
+ * OOPE2 - Olio-ohjelmoinnin perusteet 2
+ * Harjoitustyö
+ */
+
 package harjoitustyo.omalista;
 
 import java.util.LinkedList;
@@ -8,6 +13,12 @@ public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
     
     @SuppressWarnings("unchecked")
     
+    /*
+     * Lisätään oliot listaan compareTo-metodilla vertaillen, jos paluuarvo on 0, vertailussa
+     * on olleet samat oliot, jolloin jatketaan.
+     * Jos paluuarvo on < 0, lisätään alkio indeksiin i.
+     */
+    
     @Override
     public void lisää(E uusi) throws IllegalArgumentException {
         //jos alkio on null tai sillä ei ole Comparable-rajapintaa toteutettu, heitetään error.
@@ -15,26 +26,8 @@ public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
             throw new IllegalArgumentException("OmaListan alkio null tai ei comparable");
         }
         //for-silmukka jossa käydään läpi lista 
-        
-        /*
-         *    
-         * public int compareTo(Dokumentti T) {
-               if (tunniste == T.tunniste) {
-                   return 0;
-               } else if (tunniste > T.tunniste) {
-                   return 1;
-               } else {
-                   return -1;
-               }
-           }
-         */
-        
-        
-        /*
-         * Lisätään oliot listaan compareTo-metodilla vertaillen, jos paluuarvo on 0, vertailussa
-         * on olleet samat oliot, jolloin jatketaan.
-         * Jos paluuarvo on < 0, lisätään alkio indeksiin i.
-         */
+             
+
         for (int i = 0; i < this.size(); i++) {
             Comparable nykyinen = (Comparable)get(i);
             
