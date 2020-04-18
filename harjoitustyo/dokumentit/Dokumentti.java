@@ -29,7 +29,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
      * Aksessorit
      */
 
-    public int tunnite() {
+    public int tunniste() {
         return tunniste;
     }
 
@@ -40,19 +40,18 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
 
     // setteri
     public void tunniste(int tunniste) throws IllegalArgumentException {
-        if (tunniste > 0) {
-            this.tunniste = tunniste;
-        } else {
+        if (tunniste < 0) {
             throw new IllegalArgumentException("Dokumentin tunniste null.");
-        }
+        } 
+            this.tunniste = tunniste;
     }
 
     // setteri
     public void teksti(String teksti) throws IllegalArgumentException {
-        if (teksti != null) {
-            this.teksti = teksti;
+        if (teksti == null) {
+            throw new IllegalArgumentException("Dokumentin teksti null.");           
         }
-        throw new IllegalArgumentException("Dokumentin teksti null.");
+            this.teksti = teksti;        
     }
 
     // parametrillinen rakentaja
@@ -67,20 +66,21 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
     /*
      * Korvattu equals-metodi siten, että dokumentit katsotaan samoiksi, jos niiden
      * tunnisteet ovat sama kokonaisluku, jolloin equals palauttaa true. Muutoin se
-     * palauttaa false.
+     * palauttaa false. Try-catch muodossa jotta ei kaadu null-arvoihin.
      */
 
     @Override
-    public boolean equals(Object olio) {
-        Dokumentti kasiteltava = (Dokumentti) olio;
-        if (this.tunniste  == kasiteltava.tunniste) {
-            return true;
-        }
-        else {
+    public boolean equals(Object olio) {   
+        try {
+            Dokumentti kasiteltava = (Dokumentti) olio;
+            if (this.tunniste == kasiteltava.tunniste) {
+                return true;
+            }
+        } catch (Exception e) {
             return false;
         }
-        
-        
+        return false;
+            
     }
 
     /*
@@ -125,8 +125,14 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
 
         boolean sanatsamat = false;
 
+        
+        
         for (int i = 0; i < hakusanat.size(); i++) {
-            if (teksti.contains(hakusanat.get(i))) {
+            /*
+             * Haetaan _vain_ välilyöntien välissä olevia sanoja, ettei saada osittaisista sanoista
+             * true-paluuarvoja.
+             */
+            if (teksti.contains(" " + hakusanat.get(i)+" ")) {
                 sanatsamat = true;
                 continue;
             } else {

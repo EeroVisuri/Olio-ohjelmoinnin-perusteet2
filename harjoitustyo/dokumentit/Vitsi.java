@@ -22,11 +22,9 @@ public class Vitsi extends Dokumentti {
     // laji ei saa olla null tai tyhjä merkkijono, jos on, heitetään error.
     public void laji(String laji) {
         if (laji == null || laji.length() <= 0) {
-            this.laji = laji;
-        }
-        else {
             throw new IllegalArgumentException("Vitsin laji virheellinen");
         }
+            this.laji = laji;  
     }
     
     
@@ -35,7 +33,7 @@ public class Vitsi extends Dokumentti {
      * virheentarkistus isessään.
      */
         
-    public Vitsi(int tunniste, String teksti, String laji) throws IllegalArgumentException {
+    public Vitsi(int tunniste, String laji, String teksti) throws IllegalArgumentException {
         super(tunniste, teksti);
         laji(laji);
     }
