@@ -16,7 +16,6 @@ käyttämälläsi editorilla tai IDE:llä. **Älä muuta** _harjoitustyo.apulais
 
 ## Muuta
 
-AAARGH
 
 Perinteisesti tietovarastoissa on projektista kertova README.md-tiedosto. Korvaa
 siksi tämän tiedoston sisältö tekstillä, jossa kuvailet ohjelmaasi omin sanoin.
