@@ -157,20 +157,27 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         //poistetaan annetut välimerkit tekstistä
         for (int i = 0; i < välimerkit.length(); i++) {
            char merkki = välimerkit.charAt(i);
-           teksti = teksti.replace(merkki, Character.MIN_VALUE );
+           String s = Character.toString(merkki);
+           teksti = teksti.replace(s, "");
         }
-            
+        
+        //Lisätään välilyönnit tekstin loppuun ja alkuun, jotta saadaan ensimmäinen
+        //ja viimeinenkin sana poistettua asianmukaisesti.
+        teksti = " " + teksti + " ";
         
         //muutetaan koko teksti pieniksi kirjaimiksi
         teksti = teksti.toLowerCase();
         
         //jos tekstistä löytyy sulkusanoja, poistetaan ne.
         for (int i = 0; i < sulkusanat.size(); i++) {
-            teksti = teksti.replaceAll(sulkusanat.get(i), ""); 
-                
+            System.out.println(teksti);
+            teksti = teksti.replace(" " + sulkusanat.get(i) + " ", " "); 
+            
         }
-       
+        //Poistetaan tekstin ensimmäinen ja viimeinen välilyönti
         
+        teksti = teksti.trim();
+
     }
 
 }
