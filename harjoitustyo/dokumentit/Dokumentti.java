@@ -92,13 +92,12 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
 
     @Override
     public int compareTo(Dokumentti T) {
-        if (tunniste == T.tunniste) {
-            return 0;
-        } else if (tunniste > T.tunniste) {
+        if (tunniste > T.tunniste) {
             return 1;
-        } else {
+        } else if (tunniste < T.tunniste) {
             return -1;
         }
+        return 0;
     }
 
     /*
