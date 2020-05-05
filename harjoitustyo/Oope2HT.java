@@ -7,8 +7,13 @@ package harjoitustyo;
 
 import java.util.Scanner;
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import harjoitustyo.kokoelma.*;
 import harjoitustyo.dokumentit.Dokumentti;
+import harjoitustyo.dokumentit.Uutinen;
+import harjoitustyo.dokumentit.Vitsi;
 
 
 public class Oope2HT {
@@ -36,14 +41,14 @@ public class Oope2HT {
         
       }
     
-    public static Boolean lataaTiedosto(String tiedostonNimi) {
+    public static Boolean lataaTiedosto(String tiedostonnimi) {
         /*
          * Metodi, joka lataa parametrinaan saamaan tiedoston nimen ohjelmaan sisään.
          */
         
         Scanner tiedostonlukija = null;
         
-        File tiedosto = new File(tiedostonNimi);
+        File tiedosto = new File(tiedostonnimi);
         
         try {
             tiedostonlukija = new Scanner(tiedosto);
@@ -52,11 +57,48 @@ public class Oope2HT {
             return false;
         }
         
-        //to-do käy annettu filu läpi ja lisää oikeantyyppiseen kokoelmaan rivit sieltä
+        //luodaan uusi kokoelma, johon vitsejä/uutisia ruvetaan tunkemaan
+        Kokoelma kokoelma = new Kokoelma();
+        
+        //Tarkastetaan tiedostonnimestä onko kyseessä vitsi vai uutinen
+        
+        //Jos kyseessä on vitsi, luetaan tiedosto rivi kerrallaan läpi, pilkotaan rivi osiin ja passataan
+        //osat vitsi-luokan rakentajalle
+        if (tiedostonnimi.contains("jokes")) {
+            while (tiedostonlukija.hasNext()) {
+                String rivi = (tiedostonlukija.nextLine());
+                String[] vitsinpalat = rivi.split("///");
+                int vitsintunniste = Integer.parseInt(vitsinpalat[0]);
+                String vitsinlaji = vitsinpalat[1];
+                String itsevitsi = vitsinpalat[2];
+                Vitsi uusiVitsi = new Vitsi(vitsintunniste, vitsinlaji, itsevitsi);
+                kokoelma.lisää(uusiVitsi);
+            }
+            
+        }
+        
+        if (tiedostonnimi.contains("news")) {
+            while (tiedostonlukija.hasNext()) {
+                DateTimeFormatter pvmformaatti = DateTimeFormatter.ofPattern("d/MM/yyyy");
+                String rivi = (tiedostonlukija.nextLine());
+                String[] uutisenpalat = rivi.split("///");
+                int uutisentunniste = Integer.parseInt(uutisenpalat[0]);
+                String uutisenpvmmerkit = uutisenpalat[1];
+                LocalDate uutisenpvm = LocalDate.parse(uutisenpvmmerkit, pvmformaatti);
+                String itseuutinen = uutisenpalat[2];
+                Uutinen uusiUutinen = new Uutinen(uutisentunniste, uutisenpvm, itseuutinen);
+                kokoelma.lisää(uusiUutinen);
+            }
+        }
+        
+        
+        
         //Dokumentti.lataa(tiedosto);
         tiedostonlukija.close();
         return true;
     }
+    
+
     
     public static void main(String[] args) {
         
@@ -77,10 +119,10 @@ public class Oope2HT {
             
         }
         
-        String tiedostonNimi = args[0];
+        String tiedostonnimi = args[0];
         String sulkusanat = args[1];
         
-        lataaTiedosto(tiedostonNimi);
+        lataaTiedosto(tiedostonnimi);
         
 
         
@@ -107,6 +149,7 @@ public class Oope2HT {
             }
             else if (komento.contains("add")) {
                 //Tee lisäystoiminto virheentarkistuksella
+                
             }
             else if (komento.contains("find")) {
                 //Tee hakutoiminto virheentarkistuksella
@@ -117,9 +160,11 @@ public class Oope2HT {
             else if (komento.contains("polish")) {
                 //Tee esikäsittelytoiminto ja parametrien virheentarkistus
             }
-            else if (komento.contains("reset")) {
+            else if (komento.equals("reset")) {
                 //Lataa dokumenttitiedoston uudelleen ja poistaa aiemmin tehdyt muutokset.
                 //Jos komennolle annetaan parametrejä, tulostetaan virheilmoitus.
+                lataaTiedosto(tiedostonnimi);
+                
             }
 
             
