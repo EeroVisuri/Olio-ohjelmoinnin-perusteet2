@@ -69,9 +69,4 @@ public class Kokoelma implements Kokoava<Dokumentti> {
         }
         return null;
     }
-
-    public int size() {
-        return OmaLista.size();
-    }
-
 }
