@@ -117,11 +117,10 @@ public class Oope2HT {
         
         //jos komentona on pelkkä "print" tulostetaan koko kokoelma ulos
         if (komennonpalat.length == 1 && komento.equals("print")) {
-            int i = 0;
-            while (kokoelma.hae(i) != null) {              
-                    System.out.println(kokoelma.hae(i));
-                    i++;
+            for (int i = 0; i < kokoelma.dokumentit().size(); i++) {
+                System.out.println(kokoelma.dokumentit().get(i));
             }
+            return;
         }
         //jos komennossa on kaksi osaa, toinen osista on haettavan dokumentin tunniste
         //try-catch jossa käsitellään virhe, jos toinen osa komentoa ei ole kokonaisluku
@@ -147,7 +146,11 @@ public class Oope2HT {
     
     public static void lisää(String komento, Kokoelma kokoelma) {
         /*
-         * Tämä metod saa parametreinaan kaksiosaisen komennon, jossa ensimmäinen osa on "add" ja toinen
+         * Tämä metod saa parametreinaan kaksiosaisen komennon, jossa ensimmäinen osa on "add" ja
+         * toinen osa on lisättävä dokumentti merkkijonona, jonka muoto on sama kuin tiedostossa.
+         * Lisäys epäonnistuu jos dokumentti on jo dokumentti samalla tunnisteella, tai dokumenttia
+         * yritetään lisätä väärään kategoriaan. Lisääminen kosahtaa myös jos parametrit ovat 
+         * virheelliset(param > 1) tai niitä ei ole annettu.
          * 
          */
     }
