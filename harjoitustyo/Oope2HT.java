@@ -4,7 +4,8 @@
  */
 
 package harjoitustyo;
-
+import java.io.*; 
+import java.util.LinkedList; 
 import java.util.Scanner;
 import java.io.File;
 import java.time.LocalDate;
@@ -41,7 +42,7 @@ public class Oope2HT {
         
       }
     
-    public static Boolean lataaTiedosto(String tiedostonnimi) {
+    public static Boolean lataaTiedosto(String tiedostonnimi, Kokoelma kokoelma) {
         /*
          * Metodi, joka lataa parametrinaan saamaan tiedoston nimen ohjelmaan sisään.
          */
@@ -57,8 +58,6 @@ public class Oope2HT {
             return false;
         }
         
-        //luodaan uusi kokoelma, johon vitsejä/uutisia ruvetaan tunkemaan
-        Kokoelma kokoelma = new Kokoelma();
         
         //Tarkastetaan tiedostonnimestä onko kyseessä vitsi vai uutinen
         
@@ -77,9 +76,11 @@ public class Oope2HT {
             
         }
         
+        //Jos kyseesä uutinen, suoritetaan samat toiminnot kuin vitsin kanssa, paitsi konvertoidaan
+        //uutisessa esiintyvä päivämäärä muotoon LocalDate.
         if (tiedostonnimi.contains("news")) {
             while (tiedostonlukija.hasNext()) {
-                DateTimeFormatter pvmformaatti = DateTimeFormatter.ofPattern("d/MM/yyyy");
+                DateTimeFormatter pvmformaatti = DateTimeFormatter.ofPattern("d.MM.yyyy");
                 String rivi = (tiedostonlukija.nextLine());
                 String[] uutisenpalat = rivi.split("///");
                 int uutisentunniste = Integer.parseInt(uutisenpalat[0]);
@@ -91,11 +92,49 @@ public class Oope2HT {
             }
         }
         
-        
-        
-        //Dokumentti.lataa(tiedosto);
+        //suljetaan lukija ja palautetaan true jos kaikki onnistui odotetusti
         tiedostonlukija.close();
         return true;
+    }
+    
+    public static void tulosta(String komento, Kokoelma kokoelma) {
+        
+        //pilkotaan komento paloihin
+        String[] komennonpalat = komento.split(" ");
+        //jos kokoelma on tyhjä, heitetään virheviesti      
+        if (kokoelma == null) {
+            System.out.println("Error!");
+            return; 
+        }
+        
+        //jos komentona on pelkkä "print" tulostetaan koko kokoelma ulos
+        if (komennonpalat.length == 1 && komento.equals("print")) {
+            int i = 0;
+            while (kokoelma.hae(i) != null) {              
+                    System.out.println(kokoelma.hae(i));
+                    i++;
+            }
+        }
+        //jos komennossa on kaksi osaa, toinen osista on haettavan dokumentin tunniste
+        //try-catch jossa käsitellään virhe, jos toinen osa komentoa ei ole kokonaisluku
+        //ja käsitellään Out of Bounds-virhe.
+        try {
+            if (komennonpalat.length == 2) {
+                int tulostettavatunniste = Integer.parseInt(komennonpalat[1]);
+                if (kokoelma.hae(tulostettavatunniste) != null) {
+                    System.out.println(kokoelma.hae(tulostettavatunniste));
+                }
+                        
+            }
+            else {
+                System.out.println("Error!");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error!");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error!");
+        }
+        
     }
     
 
@@ -105,24 +144,26 @@ public class Oope2HT {
         
         
 
-        
+        //lippumuuttujat ohjelman suorittamiselle ja komentojen kaiuttamiselle
         boolean suoritetaan = true;
         boolean kaiutetaan = false;
 
-        
+        //tulostetaan tervehdys
         System.out.println("Welcome to L.O.T.");
         
-        
+        //tarkastetaan komentorivin käynnistysparametrit
         if (!tarkistaArgumentit(args)) {
             suoritetaan = false;
             return;
             
         }
-        
+        //
         String tiedostonnimi = args[0];
         String sulkusanat = args[1];
         
-        lataaTiedosto(tiedostonnimi);
+        //luodaan uusi kokoelma, johon vitsejä/uutisia ruvetaan tunkemaan
+        Kokoelma kokoelma = new Kokoelma();
+        lataaTiedosto(tiedostonnimi, kokoelma);
         
 
         
@@ -145,7 +186,7 @@ public class Oope2HT {
                 return;
             }
             else if (komento.contains("print")) {
-                //Tee printtausfunktio jossa virheentarkistus
+                tulosta(komento, kokoelma);
             }
             else if (komento.contains("add")) {
                 //Tee lisäystoiminto virheentarkistuksella
@@ -163,7 +204,7 @@ public class Oope2HT {
             else if (komento.equals("reset")) {
                 //Lataa dokumenttitiedoston uudelleen ja poistaa aiemmin tehdyt muutokset.
                 //Jos komennolle annetaan parametrejä, tulostetaan virheilmoitus.
-                lataaTiedosto(tiedostonnimi);
+                lataaTiedosto(tiedostonnimi, kokoelma);
                 
             }
 
