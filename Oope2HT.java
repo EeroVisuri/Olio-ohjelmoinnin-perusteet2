@@ -3,7 +3,6 @@
  * Harjoitustyö
  */
 
-package harjoitustyo;
 
 import java.io.*;
 import java.util.Arrays;
@@ -247,8 +246,9 @@ public class Oope2HT {
 
         // tarkistetaan parametrit
         String[]komennonpalat = komento.split(" ");
-        if (komennonpalat.length < 2) {
+        if (komennonpalat.length != 2) {
             System.out.println("Error!");
+            return;
         }
         try {
             int poistettavatunniste = Integer.parseInt(komennonpalat[1]);
@@ -260,6 +260,7 @@ public class Oope2HT {
 
             }
             System.out.println("Error!");
+            return;
         } catch (Exception ParseException) {
             System.out.println("Error!");
         }
@@ -279,21 +280,18 @@ public class Oope2HT {
         //metodille
         
         
-        
+        //kaivetaan komennosta siivottavat merkit merkkijonoksi talteen
         String siivottavat = komento.substring(7);
         
+        
         try {
-            //lasketaan pituus ja luodaan filu
+            //luodaan filu
             File sulkufilu = new File (sulkusanat);
             sulkusanalukija = new Scanner(sulkusanat);
-            //filun pituus muodossa long, käännetään se muotoon int.
-            Long sulkufilunpituus = sulkufilu.length();
-            int filunpituus = sulkufilunpituus.intValue();
-            
             //luodaan LinkedList
             LinkedList<String> sulkusanaLista = new LinkedList<>();
             //luetaan tiedostosta rivit sulkusanalistaan.
-            for (int i = 0; i < filunpituus; i++) {
+            while (sulkusanalukija.hasNext()) {
                 String rivi = sulkusanalukija.nextLine();
                 sulkusanaLista.add(rivi);
             }
@@ -304,7 +302,7 @@ public class Oope2HT {
             }
             
         } catch (Exception e) {
-            System.out.println("Error!");
+            System.out.println("Error! polishin sisältä");
         }
     }
 
@@ -431,7 +429,6 @@ public class Oope2HT {
                     System.out.println("Error!");
                     continue;
                 }
-                System.out.println(komennonpalat.length);
                 siisti(komento, kokoelma, sulkusanat);
                 
             }

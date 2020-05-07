@@ -172,8 +172,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         teksti = teksti.toLowerCase();
 
         // jos tekstistä löytyy sulkusanoja, poistetaan ne.
-        for (int i = 0; i < sulkusanat.size(); i++) {
-            System.out.println(teksti);
+        for (int i = 0; i < sulkusanat.size(); i++) {;
             teksti = teksti.replace(" " + sulkusanat.get(i) + " ", " ");
 
         }
