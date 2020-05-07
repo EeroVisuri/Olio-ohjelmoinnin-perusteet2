@@ -3,6 +3,7 @@
  * Harjoitustyö
  */
 
+package harjoitustyo;
 import java.io.*; 
 import java.util.LinkedList; 
 import java.util.Scanner;
@@ -30,16 +31,21 @@ public class Oope2HT {
         //jos parametreja on alle kaksi, tulostetaan virheviesti
         if (args.length != 2) {
           System.out.println("Wrong number of command-line arguments!");
-          System.out.println("Program terminated.");
-          System.exit(0);
           return false;
         }
         
-        //muussa tapauksessa palautetaan true jotta pääohjelma voi tarkistaa loput speksit
-        else {
-          return true;
+        else if (args.length == 2) {
+            String tiedostonnimi = args[0];
+            String sulkusanatiedosto = args[1];
+            File tmptiedosto = new File(tiedostonnimi);
+            File tmpsulkusanat = new File(sulkusanatiedosto);
+            boolean filuon = tmpsulkusanat.exists() && tmptiedosto.exists();
+            if (filuon) {
+                return true;
+            }
         }
-        
+        System.out.println("Missing file!");
+        return false;
       }
     
     public static Boolean lataaTiedosto(String tiedostonnimi, Kokoelma kokoelma) {
@@ -49,11 +55,14 @@ public class Oope2HT {
          */
         
         Scanner tiedostonlukija = null;
+
         
         File tiedosto = new File(tiedostonnimi);
+
         
         try {
             tiedostonlukija = new Scanner(tiedosto);
+
         } catch (Exception e) {
             System.out.println("Missing file!");
             return false;
@@ -158,7 +167,7 @@ public class Oope2HT {
         
     }
     
-    public static void lisää(String komento, Kokoelma kokoelma) {
+    public static void lisaakokoelmaan(String komento, String tiedostonnimi, Kokoelma kokoelma) {
         /*
          * Tämä metod saa parametreinaan kaksiosaisen komennon, jossa ensimmäinen osa on "add" ja
          * toinen osa on lisättävä dokumentti merkkijonona, jonka muoto on sama kuin tiedostossa.
@@ -167,16 +176,21 @@ public class Oope2HT {
          * virheelliset(param > 1) tai niitä ei ole annettu.
          * 
          */
+        String[] komennonpalat = komento.split(" ");
+        if (!komennonpalat[0].equals("add") || komento.length() > 2) {
+            
+        } 
+        
     }
-    
-    
-    
-    
+        
+        
+        
+        
     public static void main(String[] args) {
         
         
         
-
+        
         //lippumuuttujat ohjelman suorittamiselle ja komentojen kaiuttamiselle
         boolean suoritetaan = true;
         boolean kaiutetaan = false;
@@ -210,17 +224,21 @@ public class Oope2HT {
         
         
         
-
+        //pääasiallinen käyttöliittymän while-looppi
         while (suoritetaan) {
+            
+            //kysytään komento
             
             System.out.println("Please, enter a command:");
             
+            //sijoitetaan komento Stringiin
+        
             String komento = LUKIJA.nextLine();
 
             
             
 
-            
+            //Komentojen kaiutuksen lippumuuttujan vaihtaminen jos komentona on "echo".
             if (komento.equals("echo")) {
                 kaiutetaan = !kaiutetaan;
                 if (kaiutetaan == true) {
@@ -228,24 +246,24 @@ public class Oope2HT {
                 }
                 continue;
             }
-            
+            //komentojen kaiutus
             if(kaiutetaan) {
                 System.out.println(komento);  
             }
             
-            
+            //jos komento on "quit", suljetaan ohjelma
             if (komento.equals("quit")) {
                 System.out.println("Program terminated.");
                 suoritetaan = false;
                 System.exit(0);
             }
-            
+            //jos komennossa on "print", annetaan se tulosta-metodille. Virheentarkistus metodissa.
             else if (komento.contains("print")) {
                 tulosta(komento, kokoelma);
             }
-            
+            //jos komennossa on "add", annetaan se lisää-metodille. Virheentarkistus metodissa.
             else if (komento.contains("add")) {
-                //Tee lisäystoiminto virheentarkistuksella
+                lisaakokoelmaan(komento, tiedostonnimi, kokoelma);
                 
             }
             
