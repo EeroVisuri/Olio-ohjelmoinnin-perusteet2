@@ -3,14 +3,11 @@
  * Harjoitustyö
  */
 
-
 package harjoitustyo.dokumentit;
 
 import harjoitustyo.apulaiset.*;
 
 import java.util.LinkedList;
-
-
 
 import java.util.*;
 import java.time.*;
@@ -42,16 +39,16 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
     public void tunniste(int tunniste) throws IllegalArgumentException {
         if (tunniste < 0) {
             throw new IllegalArgumentException("Dokumentin tunniste null.");
-        } 
-            this.tunniste = tunniste;
+        }
+        this.tunniste = tunniste;
     }
 
     // setteri
     public void teksti(String teksti) throws IllegalArgumentException {
         if (teksti == null) {
-            throw new IllegalArgumentException("Dokumentin teksti null.");           
+            throw new IllegalArgumentException("Dokumentin teksti null.");
         }
-            this.teksti = teksti;        
+        this.teksti = teksti;
     }
 
     // parametrillinen rakentaja
@@ -70,7 +67,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
      */
 
     @Override
-    public boolean equals(Object olio) {   
+    public boolean equals(Object olio) {
         try {
             Dokumentti kasiteltava = (Dokumentti) olio;
             if (this.tunniste == kasiteltava.tunniste) {
@@ -80,7 +77,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
             return false;
         }
         return false;
-            
+
     }
 
     /*
@@ -114,76 +111,76 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
      * ensimmäisenä parametrinaan saatuja hakusanoja, jos se löytää hakusanat
      * tekstistä, se palauttaa true, muuten false.
      */
-    
+
     @Override
     public boolean sanatTäsmäävät(LinkedList<String> hakusanat) throws IllegalArgumentException {
-        //virheentarkistus
+        // virheentarkistus
         if (hakusanat == null || hakusanat.size() <= 0) {
             throw new IllegalArgumentException("Hakusanat joko null tai koko <= 0");
         }
-
-        boolean sanatlöytyi = true;
-
         
+        
+        //Pilkotaan teksti listaan
+        String[] dokumentinTeksti = teksti.split(" ");
         
         for (int i = 0; i < hakusanat.size(); i++) {
-            /*
-             * Haetaan _vain_ välilyöntien välissä olevia sanoja, ettei saada osittaisista sanoista
-             * true-paluuarvoja.
-             */
+            //boolean-tyyppinen muuttuja kertomaan ovatko sanat löytyneet
+            boolean sanatlöytyi = false;
             
-            String hakusana = hakusanat.get(i);
-            String hakusanaAlussa = hakusana + " ";
-            String hakusanaKeskella = " " + hakusana + " ";
-            String hakusanaLopussa = " " + hakusana;
-            
-            if (!teksti.startsWith(hakusanaAlussa) && !(teksti.contains(hakusanaKeskella) && !teksti.endsWith(hakusanaLopussa))) {
+            for (int j = 0; j < dokumentinTeksti.length; j++) {
+                //napataan tekstinpala merkkijonoksi
+                String dokumentinTekstinPala = dokumentinTeksti[j];
+                //katsotaan löytyykö se hakusanoista
+                if (dokumentinTekstinPala.equals(hakusanat.get(i))) {
+                    sanatlöytyi = true;
+                }
+            }
+            //jos sanoja ei löytynyt, palautetaan false.
+            if(!sanatlöytyi) {
                 return false;
             }
+            
         }
-        return sanatlöytyi;
+        //jos päästiin tänne asti, niin sanat löytyivät.
+        return true;
     }
-    
+
     /*
      * Metodi poistaa ensin dokumentin tekstistä kaikki annetut välimerkit ja
      * muuntaa sitten kaikki kirjainmerkit pieniksi ja poistaa lopuksi kaikki
      * sulkusanojen esiintymät.
      */
     @Override
-    public void siivoa(LinkedList<String> sulkusanat, String välimerkit)
-        throws IllegalArgumentException {
-        //virheentarkistus
-        if (sulkusanat == null || välimerkit == null || 
-                välimerkit.length() <= 0 || sulkusanat.size() <= 0) {
-            throw new IllegalArgumentException("Siivoa-metodin virheelliset "
-                    + "sulkusanat/välimerkit!");
-        
+    public void siivoa(LinkedList<String> sulkusanat, String välimerkit) throws IllegalArgumentException {
+        // virheentarkistus
+        if (sulkusanat == null || välimerkit == null || välimerkit.length() <= 0 || sulkusanat.size() <= 0) {
+            throw new IllegalArgumentException("Siivoa-metodin virheelliset " + "sulkusanat/välimerkit!");
+
         }
-        //poistetaan annetut välimerkit tekstistä
+        // poistetaan annetut välimerkit tekstistä
         for (int i = 0; i < välimerkit.length(); i++) {
-           char merkki = välimerkit.charAt(i);
-           String s = Character.toString(merkki);
-           teksti = teksti.replace(s, "");
+            char merkki = välimerkit.charAt(i);
+            String s = Character.toString(merkki);
+            teksti = teksti.replace(s, "");
         }
-        
-        //Lisätään välilyönnit tekstin loppuun ja alkuun, jotta saadaan ensimmäinen
-        //ja viimeinenkin sana poistettua asianmukaisesti.
+
+        // Lisätään välilyönnit tekstin loppuun ja alkuun, jotta saadaan ensimmäinen
+        // ja viimeinenkin sana poistettua asianmukaisesti.
         teksti = " " + teksti + " ";
-        
-        //muutetaan koko teksti pieniksi kirjaimiksi
+
+        // muutetaan koko teksti pieniksi kirjaimiksi
         teksti = teksti.toLowerCase();
-        
-        //jos tekstistä löytyy sulkusanoja, poistetaan ne.
+
+        // jos tekstistä löytyy sulkusanoja, poistetaan ne.
         for (int i = 0; i < sulkusanat.size(); i++) {
             System.out.println(teksti);
-            teksti = teksti.replace(" " + sulkusanat.get(i) + " ", " "); 
-            
+            teksti = teksti.replace(" " + sulkusanat.get(i) + " ", " ");
+
         }
-        //Poistetaan tekstin ensimmäinen ja viimeinen välilyönti
-        
+        // Poistetaan tekstin ensimmäinen ja viimeinen välilyönti
+
         teksti = teksti.trim();
 
     }
 
 }
-

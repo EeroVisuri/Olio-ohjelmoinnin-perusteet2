@@ -210,24 +210,23 @@ public class Oope2HT {
     public static void hakuSanoilla(String komento, Kokoelma kokoelma) {
         /*
          * Tämä metodi saa parametreinaan merkkijonon, jossa on hakusanoja ja kokoelman,
-         * josta hakusanat etsitään. Metodi käy läpi kokoelman, ja tulostaa niiden dokumenttien
-         * tunnisteet, joista se löysi hakusanoja vastaavia.
+         * josta hakusanat etsitään. Metodi käy läpi kokoelman, ja tulostaa niiden
+         * dokumenttien tunnisteet, joista se löysi hakusanoja vastaavia.
          */
-        
-        //jos komennossa on liian vähän parametrejä, heitetään virhe
-        if (komento.length() < 4) {
+
+        // jos komennossa on liian vähän parametrejä, heitetään virhe
+        if (komento.length() < 5) {
             System.out.println("Error!");
             return;
         }
-        
-        //pilkotaan parametrina saatu merkkijono sanoja listaksi
+
+        // pilkotaan parametrina saatu merkkijono sanoja listaksi
         String haettavat = komento.substring(5);
         String[] haettavatsanat = haettavat.split(" ");
-        System.out.println(Arrays.deepToString(haettavatsanat));
-        //lista jossa haetut sanat
+        // lista jossa haetut sanat
         LinkedList<String> haetutsanat = new LinkedList<String>(Arrays.asList(haettavatsanat));
-        
-        //for-silmukka jossa käydään kokoelma läpi ja etsitään hakusanoja.
+
+        // for-silmukka jossa käydään kokoelma läpi ja etsitään hakusanoja.
         for (Dokumentti dokumentti : kokoelma.dokumentit()) {
             if (dokumentti.sanatTäsmäävät(haetutsanat)) {
                 System.out.println(dokumentti.tunniste());
@@ -236,18 +235,17 @@ public class Oope2HT {
         return;
 
     }
-    
-    
-    public static void poistaSana(String komento, Kokoelma kokoelma)  {
+
+    public static void poistaSana(String komento, Kokoelma kokoelma) {
         /*
          * Metodi saa parametreinaan merkkijonona dokumentin tunnisteen ja kokoelman,
          * muuntaa sen merkkijonosta tunnisteen kokonaisluvuksi ja poistaa kokoelmasta
-         * saadulla tunnisteella olevan dokumentin. Jos tunnisteella ei löydy dokumenttia
-         * tai parametriarvoja ei ole annettu, parametrejä on enemmän kuin yksi tai parametri
-         * on jotenkin viallinen, niin poistaminen epäonnistuu.
+         * saadulla tunnisteella olevan dokumentin. Jos tunnisteella ei löydy
+         * dokumenttia tai parametriarvoja ei ole annettu, parametrejä on enemmän kuin
+         * yksi tai parametri on jotenkin viallinen, niin poistaminen epäonnistuu.
          */
-        
-        //tarkistetaan parametrit
+
+        // tarkistetaan parametrit
         if (komento.length() < 7) {
             System.out.println("Error!");
         }
@@ -258,16 +256,54 @@ public class Oope2HT {
                     kokoelma.dokumentit().remove(kokoelma.dokumentit().get(i));
                     return;
                 }
-                
+
             }
         } catch (Exception ParseException) {
             System.out.println("Error!");
         }
-        
 
+    }
+    
+    public static void siisti(String komento, Kokoelma kokoelma, String sulkusanat) {
+        /*
+         * Metodi ottaa parametreina merkkijonon, kokoelman ja sulkusanojen tiedoston nimen.
+         * Metodi lukee sulkusanat LinkedListiin, jotta se voi passata ne dokumentti-luokan
+         * siivoa-metodille. 
+         */
         
-
+        //luodaan lukija sulkusanatiedostolle
+        Scanner sulkusanalukija = null;
+        //try-catch jossa luetaan sulkusanat tiedostosta LinkedListiin, ja passataan siivoa-
+        //metodille
         
+        
+        
+        String siivottavat = komento.substring(7);
+        
+        try {
+            //lasketaan pituus ja luodaan filu
+            File sulkufilu = new File (sulkusanat);
+            sulkusanalukija = new Scanner(sulkusanat);
+            //filun pituus muodossa long, käännetään se muotoon int.
+            Long sulkufilunpituus = sulkufilu.length();
+            int filunpituus = sulkufilunpituus.intValue();
+            
+            //luodaan LinkedList
+            LinkedList<String> sulkusanaLista = new LinkedList<>();
+            //luetaan tiedostosta rivit sulkusanalistaan.
+            for (int i = 0; i < filunpituus; i++) {
+                String rivi = sulkusanalukija.nextLine();
+                sulkusanaLista.add(rivi);
+            }
+            //Siivotaan kokoelmasta dokumentti-luokan siivoa-metodilla sulkusanaListalla olevat
+            //sanat ja parametrina saadut siivottavat pois.
+            for (Dokumentti dokumentti : kokoelma.dokumentit()) {
+                dokumentti.siivoa(sulkusanaLista, siivottavat);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error!");
+        }
     }
 
     public static void main(String[] args) {
@@ -383,12 +419,19 @@ public class Oope2HT {
             }
 
             else if (komento.contains("remove")) {
-                // Tee dokkarin poistotoiminto virheentarkistuksella
+                poistaSana(komento, kokoelma);
 
             }
 
             else if (komento.contains("polish")) {
-                // Tee esikäsittelytoiminto ja parametrien virheentarkistus
+                String[] komennonpalat = komento.split(" ");
+                if (komennonpalat.length == 1 || komennonpalat.length > 2) {
+                    System.out.println("Error!");
+                    continue;
+                }
+                System.out.println(komennonpalat.length);
+                siisti(komento, kokoelma, sulkusanat);
+                
             }
 
             else if (komento.equals("reset")) {
