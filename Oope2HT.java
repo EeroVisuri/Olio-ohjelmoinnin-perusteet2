@@ -3,7 +3,7 @@
  * Harjoitustyö
  */
 
-
+package harjoitustyo;
 
 import java.io.*;
 import java.util.Arrays;
@@ -246,11 +246,12 @@ public class Oope2HT {
          */
 
         // tarkistetaan parametrit
-        if (komento.length() < 7) {
+        String[]komennonpalat = komento.split(" ");
+        if (komennonpalat.length < 2) {
             System.out.println("Error!");
         }
         try {
-            int poistettavatunniste = Integer.parseInt(komento);
+            int poistettavatunniste = Integer.parseInt(komennonpalat[1]);
             for (int i = 0; i < kokoelma.dokumentit().size(); i++) {
                 if (kokoelma.dokumentit().get(i).tunniste() == poistettavatunniste) {
                     kokoelma.dokumentit().remove(kokoelma.dokumentit().get(i));
@@ -258,6 +259,7 @@ public class Oope2HT {
                 }
 
             }
+            System.out.println("Error!");
         } catch (Exception ParseException) {
             System.out.println("Error!");
         }
