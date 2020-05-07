@@ -68,5 +68,5 @@ public class Kokoelma implements Kokoava<Dokumentti> {
             }
         }
         return null;
-    } 
+    }
 }

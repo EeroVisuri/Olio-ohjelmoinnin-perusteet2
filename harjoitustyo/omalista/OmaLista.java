@@ -29,8 +29,8 @@ public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
         }
 
         /*
-         * compareTo-metodi toiminnallisuus = jos tunnisteet ovat samat, se palauttaa
-         * 0, jos tunniste on > T.tunniste, se palauttaa 1, muuten -1.
+         * compareTo-metodi toiminnallisuus = jos tunnisteet ovat samat, se palauttaa 0,
+         * jos tunniste on > T.tunniste, se palauttaa 1, muuten -1.
          */
 
         // for-silmukka jossa käydään läpi lista

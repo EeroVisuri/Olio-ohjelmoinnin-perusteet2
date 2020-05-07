@@ -131,7 +131,13 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
              * Haetaan _vain_ välilyöntien välissä olevia sanoja, ettei saada osittaisista sanoista
              * true-paluuarvoja.
              */
-            if (!(teksti.contains(" " + hakusanat.get(i)+" "))) {
+            
+            String hakusana = hakusanat.get(i);
+            String hakusanaAlussa = hakusana + " ";
+            String hakusanaKeskella = " " + hakusana + " ";
+            String hakusanaLopussa = " " + hakusana;
+            
+            if (!teksti.startsWith(hakusanaAlussa) && !(teksti.contains(hakusanaKeskella) && !teksti.endsWith(hakusanaLopussa))) {
                 return false;
             }
         }

@@ -4,7 +4,10 @@
  */
 
 
+
 import java.io.*;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.io.File;
@@ -21,12 +24,10 @@ public class Oope2HT {
 
     // importataan lukija
     public static final Scanner LUKIJA = new Scanner(System.in);
-    //muuttuja johon tallennetaan käsiteltävän kokoelman tyyppi, jottei lisätä vitsejä uutisiiin.
+    // muuttuja johon tallennetaan käsiteltävän kokoelman tyyppi, jottei lisätä
+    // vitsejä uutisiiin.
     public static String kokoelmanTyyppi = new String();
-    
-    
-    
-    
+
     public static Boolean tarkistaArgumentit(String[] args) {
         /*
          * Tämä metodi tarkastaa saamansa käynnistysparametrit ja palauttaa true, jos ei
@@ -62,7 +63,7 @@ public class Oope2HT {
          */
 
         Scanner tiedostonlukija = null;
-        
+
         File tiedosto = new File(tiedostonnimi);
 
         try {
@@ -80,23 +81,23 @@ public class Oope2HT {
             tiedostonlukija.close();
             return false;
         }
-        //jos tiedostonnimessä on "jokes" niin se sisältää vitsejä
+        // jos tiedostonnimessä on "jokes" niin se sisältää vitsejä
         else if (tiedostonnimi.contains("jokes")) {
-            //niin kauan kun lukijalla on rivejä, lisätään vitsejä kokoelmaan
+            // niin kauan kun lukijalla on rivejä, lisätään vitsejä kokoelmaan
             kokoelmanTyyppi = "vitsi";
-            while (tiedostonlukija.hasNext()) {  
-            String rivi = (tiedostonlukija.nextLine());
-            Vitsi uusiVitsi = luoRivistaVitsi(rivi);
-            kokoelma.lisää(uusiVitsi);
+            while (tiedostonlukija.hasNext()) {
+                String rivi = (tiedostonlukija.nextLine());
+                Vitsi uusiVitsi = luoRivistaVitsi(rivi);
+                kokoelma.lisää(uusiVitsi);
             }
-            //jos tiedoston nimessä on "news" niin se sisältää uutisia
+            // jos tiedoston nimessä on "news" niin se sisältää uutisia
         } else if (tiedostonnimi.contains("news")) {
             kokoelmanTyyppi = "uutinen";
-            //niin kauan kun lukijalla on rivejä, lisätään uutisia
+            // niin kauan kun lukijalla on rivejä, lisätään uutisia
             while (tiedostonlukija.hasNext()) {
-            String rivi = (tiedostonlukija.nextLine());
-            Uutinen uusiUutinen = luoRivistaUutinen(rivi);
-            kokoelma.lisää(uusiUutinen);
+                String rivi = (tiedostonlukija.nextLine());
+                Uutinen uusiUutinen = luoRivistaUutinen(rivi);
+                kokoelma.lisää(uusiUutinen);
             }
         }
 
@@ -106,10 +107,9 @@ public class Oope2HT {
     }
 
     public static Vitsi luoRivistaVitsi(String rivi) {
-        /* 
-         * Metodi ottaa parametrinaan merkkijonoja. Metodi pilkkoo merkkijonon
-         * osiin ja passaa osat vitsi-luokan rakentajalle 
-         * ja palauttaa uusiVitsi-Vitsin.
+        /*
+         * Metodi ottaa parametrinaan merkkijonoja. Metodi pilkkoo merkkijonon osiin ja
+         * passaa osat vitsi-luokan rakentajalle ja palauttaa uusiVitsi-Vitsin.
          *
          */;
         String[] vitsinpalat = rivi.split("///");
@@ -121,9 +121,10 @@ public class Oope2HT {
     }
 
     public static Uutinen luoRivistaUutinen(String rivi) {
-        /* Metodi ottaa parametrinaan merkkijonoja, suorittaa samat toiminnot 
-         * kuin vitsin kanssa, paitsi konvertoi uutisessa esiintyvän päivämäärän 
-         * muotoon LocalDate.
+        /*
+         * Metodi ottaa parametrinaan merkkijonoja, suorittaa samat toiminnot kuin
+         * vitsin kanssa, paitsi konvertoi uutisessa esiintyvän päivämäärän muotoon
+         * LocalDate.
          */
 
         DateTimeFormatter pvmformaatti = DateTimeFormatter.ofPattern("d.M.yyyy");
@@ -187,13 +188,11 @@ public class Oope2HT {
 
     }
 
-
-
     public static Boolean onkoUutinen(String rivi) {
         /*
-         * Tämä metodi saa parametrinaan merkkijonon, ja se tarkistaa löytyykö merkkijonosta
-         * päivämäärä. Jos päivämäärä löytyy, voidaan merkkijonoa pitää uutisena ja 
-         * palautetaan true, muuten palautetaan false.
+         * Tämä metodi saa parametrinaan merkkijonon, ja se tarkistaa löytyykö
+         * merkkijonosta päivämäärä. Jos päivämäärä löytyy, voidaan merkkijonoa pitää
+         * uutisena ja palautetaan true, muuten palautetaan false.
          * 
          */
         DateTimeFormatter pvmformaatti = DateTimeFormatter.ofPattern("d.M.yyyy");
@@ -205,6 +204,69 @@ public class Oope2HT {
             return false;
         }
         return true;
+
+    }
+
+    public static void hakuSanoilla(String komento, Kokoelma kokoelma) {
+        /*
+         * Tämä metodi saa parametreinaan merkkijonon, jossa on hakusanoja ja kokoelman,
+         * josta hakusanat etsitään. Metodi käy läpi kokoelman, ja tulostaa niiden dokumenttien
+         * tunnisteet, joista se löysi hakusanoja vastaavia.
+         */
+        
+        //jos komennossa on liian vähän parametrejä, heitetään virhe
+        if (komento.length() < 4) {
+            System.out.println("Error!");
+            return;
+        }
+        
+        //pilkotaan parametrina saatu merkkijono sanoja listaksi
+        String haettavat = komento.substring(5);
+        String[] haettavatsanat = haettavat.split(" ");
+        System.out.println(Arrays.deepToString(haettavatsanat));
+        //lista jossa haetut sanat
+        LinkedList<String> haetutsanat = new LinkedList<String>(Arrays.asList(haettavatsanat));
+        
+        //for-silmukka jossa käydään kokoelma läpi ja etsitään hakusanoja.
+        for (Dokumentti dokumentti : kokoelma.dokumentit()) {
+            if (dokumentti.sanatTäsmäävät(haetutsanat)) {
+                System.out.println(dokumentti.tunniste());
+            }
+        }
+        return;
+
+    }
+    
+    
+    public static void poistaSana(String komento, Kokoelma kokoelma)  {
+        /*
+         * Metodi saa parametreinaan merkkijonona dokumentin tunnisteen ja kokoelman,
+         * muuntaa sen merkkijonosta tunnisteen kokonaisluvuksi ja poistaa kokoelmasta
+         * saadulla tunnisteella olevan dokumentin. Jos tunnisteella ei löydy dokumenttia
+         * tai parametriarvoja ei ole annettu, parametrejä on enemmän kuin yksi tai parametri
+         * on jotenkin viallinen, niin poistaminen epäonnistuu.
+         */
+        
+        //tarkistetaan parametrit
+        if (komento.length() < 7) {
+            System.out.println("Error!");
+        }
+        try {
+            int poistettavatunniste = Integer.parseInt(komento);
+            for (int i = 0; i < kokoelma.dokumentit().size(); i++) {
+                if (kokoelma.dokumentit().get(i).tunniste() == poistettavatunniste) {
+                    kokoelma.dokumentit().remove(kokoelma.dokumentit().get(i));
+                    return;
+                }
+                
+            }
+        } catch (Exception ParseException) {
+            System.out.println("Error!");
+        }
+        
+
+        
+
         
     }
 
@@ -285,27 +347,31 @@ public class Oope2HT {
                     System.out.println("Error!");
                     continue;
                 }
-                
-                //sijoitetaan vitsin/uutisen sisältävä pala rivi-nimiseen merkkijonoon              
-                String rivi =  palat[1];
-                //tarkastetaan onko kyseessä uutinen vai vitsi metodilla.
+
+                // sijoitetaan vitsin/uutisen sisältävä pala rivi-nimiseen merkkijonoon
+                String rivi = palat[1];
+                // tarkastetaan onko kyseessä uutinen vai vitsi onkoUutinen-metodilla.
                 Boolean uutinen = onkoUutinen(rivi);
-                
+                // jos kyseessä on uutinen, ja käsiteltävä kokoelma on uutisia
+                // lisätään kokoelmaan luoRivistaUutinen-metodilla
                 if (uutinen && kokoelmanTyyppi == "uutinen") {
                     try {
                         kokoelma.lisää(luoRivistaUutinen(rivi));
                     } catch (IllegalArgumentException e) {
                         System.out.println("Error!");
                     }
-                    
+
                 }
-                else if(!uutinen && kokoelmanTyyppi == "vitsi") {
+                // jos kyseessä on vitsi, ja käsiteltävä kokoelma on vitsi-tyyppinen
+                // lisätään kokoelmaan luoRivistaVitsi-metodilla
+                else if (!uutinen && kokoelmanTyyppi == "vitsi") {
                     try {
                         kokoelma.lisää(luoRivistaVitsi(rivi));
                     } catch (IllegalArgumentException e) {
                         System.out.println("Error!");
                     }
                 }
+                // muussa tapauksessa jotain on pielessä, joten heitetään error.
                 else {
                     System.out.println("Error!");
                 }
@@ -313,7 +379,7 @@ public class Oope2HT {
             }
 
             else if (komento.contains("find")) {
-                // Tee hakutoiminto virheentarkistuksella
+                hakuSanoilla(komento, kokoelma);
             }
 
             else if (komento.contains("remove")) {
@@ -328,6 +394,7 @@ public class Oope2HT {
             else if (komento.equals("reset")) {
                 // Lataa dokumenttitiedoston uudelleen ja poistaa aiemmin tehdyt muutokset.
                 // Jos komennolle annetaan parametrejä, tulostetaan virheilmoitus.
+                kokoelma = new Kokoelma();
                 lataaTiedosto(tiedostonnimi, kokoelma);
             }
 
@@ -338,6 +405,5 @@ public class Oope2HT {
         }
 
     }// main
-
 
 }// class
