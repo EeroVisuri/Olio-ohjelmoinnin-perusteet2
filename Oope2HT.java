@@ -3,7 +3,6 @@
  * Harjoitustyö
  */
 
-
 import java.io.*; 
 import java.util.LinkedList; 
 import java.util.Scanner;
@@ -32,6 +31,7 @@ public class Oope2HT {
         if (args.length != 2) {
           System.out.println("Wrong number of command-line arguments!");
           System.out.println("Program terminated.");
+          System.exit(0);
           return false;
         }
         
@@ -44,7 +44,8 @@ public class Oope2HT {
     
     public static Boolean lataaTiedosto(String tiedostonnimi, Kokoelma kokoelma) {
         /*
-         * Metodi, joka lataa parametrinaan saamaan tiedoston nimen ohjelmaan sisään.
+         * Metodi, joka lataa parametrinaan saamaan tiedoston nimen ohjelmaan sisään. Metodi
+         * palauttaa true onnistumisesta, ja false jos jotain meni pieleen.
          */
         
         Scanner tiedostonlukija = null;
@@ -59,11 +60,19 @@ public class Oope2HT {
         }
         
         
-        //Tarkastetaan tiedostonnimestä onko kyseessä vitsi vai uutinen
         
+        
+
+        //Tarkastetaan tiedostonnimestä onko kyseessä vitsi vai uutinen, jos ei kumpikaan, 
+        //palautetaan false.
+        if (!tiedostonnimi.contains("jokes") && !tiedostonnimi.contains("news")) {
+            tiedostonlukija.close();
+            return false;
+        }
+
         //Jos kyseessä on vitsi, luetaan tiedosto rivi kerrallaan läpi, pilkotaan rivi osiin 
         //ja passataan osat vitsi-luokan rakentajalle
-
+        
         if (tiedostonnimi.contains("jokes")) {
             while (tiedostonlukija.hasNext()) {
                 String rivi = (tiedostonlukija.nextLine());
@@ -122,6 +131,7 @@ public class Oope2HT {
             }
             return;
         }
+
         //jos komennossa on kaksi osaa, toinen osista on haettavan dokumentin tunniste
         //try-catch jossa käsitellään virhe, jos toinen osa komentoa ei ole kokonaisluku
         //ja käsitellään Out of Bounds-virhe.
@@ -131,10 +141,14 @@ public class Oope2HT {
                 if (kokoelma.hae(tulostettavatunniste) != null) {
                     System.out.println(kokoelma.hae(tulostettavatunniste));
                 }
+                else {
+                    System.out.println("Error!");
+                }
                         
             }
             else {
                 System.out.println("Error!");
+                return;
             }
         } catch (NumberFormatException e) {
             System.out.println("Error!");
@@ -172,8 +186,9 @@ public class Oope2HT {
         
         //tarkastetaan komentorivin käynnistysparametrit
         if (!tarkistaArgumentit(args)) {
+            System.out.println("Program terminated.");
             suoritetaan = false;
-            return;
+            System.exit(0);
             
         }
         //
@@ -182,7 +197,14 @@ public class Oope2HT {
         
         //luodaan uusi kokoelma, johon vitsejä/uutisia ruvetaan tunkemaan
         Kokoelma kokoelma = new Kokoelma();
-        lataaTiedosto(tiedostonnimi, kokoelma);
+        
+        //testataan onnistuuko tiedoston lataaminen 
+        
+        if (!lataaTiedosto(tiedostonnimi, kokoelma)) {
+            System.out.println("Program terminated.");
+            suoritetaan = false;
+        }
+        
         
 
         
@@ -190,51 +212,66 @@ public class Oope2HT {
         
 
         while (suoritetaan) {
-            String komento = LUKIJA.nextLine();
-
+            
             System.out.println("Please, enter a command:");
             
-            if(kaiutetaan) {
-                System.out.println(komento);
-              }
+            String komento = LUKIJA.nextLine();
+
+            
+            
+
             
             if (komento.equals("echo")) {
                 kaiutetaan = !kaiutetaan;
                 if (kaiutetaan == true) {
-                    System.out.println(komento);
+                    System.out.println("echo");
                 }
+                continue;
             }
-            else if (komento.equals("quit")) {
+            
+            if(kaiutetaan) {
+                System.out.println(komento);  
+            }
+            
+            
+            if (komento.equals("quit")) {
                 System.out.println("Program terminated.");
                 suoritetaan = false;
-                return;
+                System.exit(0);
             }
+            
             else if (komento.contains("print")) {
                 tulosta(komento, kokoelma);
             }
+            
             else if (komento.contains("add")) {
                 //Tee lisäystoiminto virheentarkistuksella
                 
             }
+            
             else if (komento.contains("find")) {
                 //Tee hakutoiminto virheentarkistuksella
             }
+            
             else if (komento.contains("remove")) {
                 //Tee dokkarin poistotoiminto virheentarkistuksella
                 
             }
+            
             else if (komento.contains("polish")) {
                 //Tee esikäsittelytoiminto ja parametrien virheentarkistus
             }
+            
             else if (komento.equals("reset")) {
                 //Lataa dokumenttitiedoston uudelleen ja poistaa aiemmin tehdyt muutokset.
                 //Jos komennolle annetaan parametrejä, tulostetaan virheilmoitus.
-                lataaTiedosto(tiedostonnimi, kokoelma);
-                
+                lataaTiedosto(tiedostonnimi, kokoelma);   
             }
+            
             else {
                 System.out.println("Error!");
             }
+
 
             
         }
