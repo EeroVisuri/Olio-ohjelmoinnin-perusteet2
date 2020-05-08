@@ -3,6 +3,7 @@
  * Harjoitustyö
  */
 
+package harjoitustyo;
 
 import java.io.*;
 import java.util.Arrays;
@@ -287,7 +288,7 @@ public class Oope2HT {
         try {
             //luodaan filu
             File sulkufilu = new File (sulkusanat);
-            sulkusanalukija = new Scanner(sulkusanat);
+            sulkusanalukija = new Scanner(sulkufilu);
             //luodaan LinkedList
             LinkedList<String> sulkusanaLista = new LinkedList<>();
             //luetaan tiedostosta rivit sulkusanalistaan.
@@ -430,6 +431,7 @@ public class Oope2HT {
                     continue;
                 }
                 siisti(komento, kokoelma, sulkusanat);
+                
                 
             }
 

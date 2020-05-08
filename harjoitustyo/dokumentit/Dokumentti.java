@@ -118,30 +118,29 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         if (hakusanat == null || hakusanat.size() <= 0) {
             throw new IllegalArgumentException("Hakusanat joko null tai koko <= 0");
         }
-        
-        
-        //Pilkotaan teksti listaan
+
+        // Pilkotaan teksti listaan
         String[] dokumentinTeksti = teksti.split(" ");
-        
+
         for (int i = 0; i < hakusanat.size(); i++) {
-            //boolean-tyyppinen muuttuja kertomaan ovatko sanat löytyneet
+            // boolean-tyyppinen muuttuja kertomaan ovatko sanat löytyneet
             boolean sanatlöytyi = false;
-            
+
             for (int j = 0; j < dokumentinTeksti.length; j++) {
-                //napataan tekstinpala merkkijonoksi
+                // napataan tekstinpala merkkijonoksi
                 String dokumentinTekstinPala = dokumentinTeksti[j];
-                //katsotaan löytyykö se hakusanoista
+                // katsotaan löytyykö se hakusanoista
                 if (dokumentinTekstinPala.equals(hakusanat.get(i))) {
                     sanatlöytyi = true;
                 }
             }
-            //jos sanoja ei löytynyt, palautetaan false.
-            if(!sanatlöytyi) {
+            // jos sanoja ei löytynyt, palautetaan false.
+            if (!sanatlöytyi) {
                 return false;
             }
-            
+
         }
-        //jos päästiin tänne asti, niin sanat löytyivät.
+        // jos päästiin tänne asti, niin sanat löytyivät.
         return true;
     }
 
@@ -151,12 +150,14 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
      * sulkusanojen esiintymät.
      */
     @Override
-    public void siivoa(LinkedList<String> sulkusanat, String välimerkit) throws IllegalArgumentException {
+    public void siivoa(LinkedList<String> sulkusanat, String välimerkit) 
+            throws IllegalArgumentException {
         // virheentarkistus
-        if (sulkusanat == null || välimerkit == null || välimerkit.length() <= 0 || sulkusanat.size() <= 0) {
-            throw new IllegalArgumentException("Siivoa-metodin virheelliset " + "sulkusanat/välimerkit!");
-
+        if (sulkusanat == null || välimerkit == null || välimerkit.length() <= 0 
+                || sulkusanat.size() <= 0) { throw new 
+            IllegalArgumentException("Siivoa-metodin virheelliset " + "sulkusanat/välimerkit!");
         }
+        
         // poistetaan annetut välimerkit tekstistä
         for (int i = 0; i < välimerkit.length(); i++) {
             char merkki = välimerkit.charAt(i);
@@ -172,13 +173,19 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         teksti = teksti.toLowerCase();
 
         // jos tekstistä löytyy sulkusanoja, poistetaan ne.
-        for (int i = 0; i < sulkusanat.size(); i++) {;
-            teksti = teksti.replace(" " + sulkusanat.get(i) + " ", " ");
+        for (int i = 0; i < sulkusanat.size(); i++) {
+            while (teksti.contains(" " + sulkusanat.get(i) + " ")) {
+                teksti = teksti.replace(" " + sulkusanat.get(i) + " ", " ");
+            }
+            
 
         }
         // Poistetaan tekstin ensimmäinen ja viimeinen välilyönti
 
         teksti = teksti.trim();
+        
+        //poistetaan kaksinkertaiset välilyönnit
+        teksti = teksti.replaceAll("( )+", " ");
 
     }
 
