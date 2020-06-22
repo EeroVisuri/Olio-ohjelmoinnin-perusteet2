@@ -124,18 +124,18 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
 
         for (int i = 0; i < hakusanat.size(); i++) {
             // boolean-tyyppinen muuttuja kertomaan ovatko sanat löytyneet
-            boolean sanatlöytyi = false;
+            boolean sanatloytyi = false;
 
             for (int j = 0; j < dokumentinTeksti.length; j++) {
                 // napataan tekstinpala merkkijonoksi
                 String dokumentinTekstinPala = dokumentinTeksti[j];
                 // katsotaan löytyykö se hakusanoista
                 if (dokumentinTekstinPala.equals(hakusanat.get(i))) {
-                    sanatlöytyi = true;
+                    sanatloytyi = true;
                 }
             }
             // jos sanoja ei löytynyt, palautetaan false.
-            if (!sanatlöytyi) {
+            if (!sanatloytyi) {
                 return false;
             }
 
