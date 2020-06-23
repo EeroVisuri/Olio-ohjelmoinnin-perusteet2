@@ -17,19 +17,30 @@ import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
 
 import harjoitustyo.kokoelma.*;
+import jdk.javadoc.internal.tool.resources.javadoc;
 import harjoitustyo.dokumentit.Dokumentti;
 import harjoitustyo.dokumentit.Uutinen;
 import harjoitustyo.dokumentit.Vitsi;
 
+/**
+ * 
+ * Ajoluokka, tarkastaa käynnistysargumentit ja ajelee käyttöliittymää.
+ * Ainoa metodi on tarkistaArgumentit.
+ *
+ */
+
+
 public class Oope2HT {
 
-
+    /**
+     * Tämä metodi tarkastaa saamansa käynnistysparametrit ja palauttaa true, jos ei
+     * löydä virhettä ja false jos löytää niistä virheen.
+     * @param String[] args ottaa käynnistysparametrit
+     * @return boolean true jos onnistui, false jos löytyi virhe.
+     * 
+     */
     public static Boolean tarkistaArgumentit(String[] args) {
-        /*
-         * Tämä metodi tarkastaa saamansa käynnistysparametrit ja palauttaa true, jos ei
-         * löydä virhettä ja false jos löytää niistä virheen.
-         *
-         */
+
 
         // jos parametreja on alle kaksi, tulostetaan virheviesti
         if (args.length != 2) {
@@ -50,7 +61,11 @@ public class Oope2HT {
         System.out.println("Missing file!");
         return false;
     }
-
+    
+    /**
+     * main tarkistaa käynnistysparametrit ja ajaa käyttöliittymän.
+     * @param args ottaa käynnistysriviparametrit
+     */
 
 
     public static void main(String[] args) {

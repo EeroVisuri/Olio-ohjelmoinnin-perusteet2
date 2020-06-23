@@ -17,7 +17,24 @@ public class UI {
 
     // importataan lukija
     public static final Scanner LUKIJA = new Scanner(System.in);
-
+    
+    //komennot luokkavakioina
+    
+    public static final String PRINTTAUS = "print";
+    
+    public static final String KAIUTUS = "echo";
+    
+    public static final String LOPETUS = "quit";
+    
+    public static final String LISAYS = "add";
+    
+    public static final String ETSI = "find";
+    
+    public static final String POISTA = "remove";
+    
+    public static final String SIISTI = "polish";
+    
+    public static final String ALUSTA = "reset";
 
     public static void tulosta(String komento, Kokoelma kokoelma) {
 
@@ -38,7 +55,7 @@ public class UI {
         }
 
         // jos komentona on pelkkä "print" tulostetaan koko kokoelma ulos
-        if (komennonpalat.length == 1 && komento.equals("print")) {
+        if (komennonpalat.length == 1 && komento.equals(PRINTTAUS)) {
             for (int i = 0; i < kokoelma.dokumentit().size(); i++) {
                 System.out.println(kokoelma.dokumentit().get(i));
             }
@@ -105,7 +122,7 @@ public class UI {
             String komento = LUKIJA.nextLine();
 
             // Komentojen kaiutuksen lippumuuttujan vaihtaminen jos komentona on "echo".
-            if (komento.equals("echo")) {
+            if (komento.equals(KAIUTUS)) {
                 kaiutetaan = !kaiutetaan;
                 if (kaiutetaan == true) {
                     System.out.println("echo");
@@ -118,19 +135,19 @@ public class UI {
             }
 
             // jos komento on "quit", suljetaan ohjelma
-            if (komento.equals("quit")) {
+            if (komento.equals(LOPETUS)) {
                 System.out.println("Program terminated.");
                 suoritetaan = false;
                 System.exit(0);
             }
             // jos komennossa on "print", annetaan se tulosta-metodille. Virheentarkistus
             // metodissa.
-            else if (komento.contains("print")) {
+            else if (komento.contains(PRINTTAUS)) {
                 tulosta(komento, kokoelma);
             }
             // jos komennossa on "add", pilkotaan komento paloihin
             // ja suoritetaan virheentarkistus parametrien oikeellisuudesta
-            else if (komento.contains("add")) {
+            else if (komento.contains(LISAYS)) {
                 if (komento.length() < 4) {
                     System.out.println("Error!");
                     continue;
@@ -171,16 +188,16 @@ public class UI {
 
             }
 
-            else if (komento.contains("find")) {
+            else if (komento.contains(ETSI)) {
                 kokoelma.hakuSanoilla(komento, kokoelma);
             }
 
-            else if (komento.contains("remove")) {
+            else if (komento.contains(POISTA)) {
                 kokoelma.poistaSana(komento, kokoelma);
 
             }
 
-            else if (komento.contains("polish")) {
+            else if (komento.contains(SIISTI)) {
                 String[] komennonpalat = komento.split(" ");
                 if (komennonpalat.length == 1 || komennonpalat.length > 2) {
                     System.out.println("Error!");
@@ -190,7 +207,7 @@ public class UI {
                 
             }
 
-            else if (komento.equals("reset")) {
+            else if (komento.equals(ALUSTA)) {
                 // Lataa dokumenttitiedoston uudelleen ja poistaa aiemmin tehdyt muutokset.
                 // Jos komennolle annetaan parametrejä, tulostetaan virheilmoitus.
                 kokoelma = new Kokoelma();
