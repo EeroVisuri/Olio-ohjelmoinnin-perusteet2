@@ -16,6 +16,14 @@ import harjoitustyo.apulaiset.*;
 import harjoitustyo.dokumentit.*;
 import harjoitustyo.omalista.*;
 
+/**
+ * Kokoelma käsittelee dokumenttikokoelmia. Kokoelmilla on String-tyyppinen kokoelmanTyyppi-
+ * attribuutti, joka kertoo onko kyseessä vitsi- vai uutiskokoelma. 
+ * @author Eero Visuri
+ *
+ */
+
+
 public class Kokoelma implements Kokoava<Dokumentti> {
     
     // muuttuja johon tallennetaan käsiteltävän kokoelman tyyppi, jottei lisätä
@@ -44,20 +52,22 @@ public class Kokoelma implements Kokoava<Dokumentti> {
         dokumentit = new OmaLista<Dokumentti>();
     }
 
-    /*
-     * Lisää kokoelmaan uuden dokumentin. Kutsuu OmaListan lisää-metodia. Heittää
-     * virheen, jos lisättä dokumentti on null tai sitä ei voi vertailla
-     * Comparable-rajapinnan kautta.
+    /**
+     * 
+     * @param tiedostonnimi
+     * @param kokoelma
+     * @return True jos lataaminen onnistuu, false jos jotain meni pieleen.
+     * 
+     * Metodi, joka lataa parametrinaan saamaan tiedoston nimen ohjelmaan sisään
+     * käyttäen joko lataaVitsi tai lataaUutinen-metodeja. Metodi palauttaa true
+     * onnistumisesta, ja false jos jotain meni pieleen.
+     * 
      */
 
     
     public static Boolean lataaTiedosto(String tiedostonnimi, Kokoelma kokoelma) {
-        /*
-         * Metodi, joka lataa parametrinaan saamaan tiedoston nimen ohjelmaan sisään
-         * käyttäen joko lataaVitsi tai lataaUutinen-metodeja. Metodi palauttaa true
-         * onnistumisesta, ja false jos jotain meni pieleen.
-         */
 
+        
         Scanner tiedostonlukija = null;
 
         File tiedosto = new File(tiedostonnimi);
@@ -101,13 +111,18 @@ public class Kokoelma implements Kokoava<Dokumentti> {
         tiedostonlukija.close();
         return true;
     }
-
+    
+    /**
+     * 
+     * @param rivi
+     * @return uusiVitsi
+     * Metodi ottaa parametrinaan merkkijonoja. Metodi pilkkoo merkkijonon osiin ja
+     * passaa osat vitsi-luokan rakentajalle ja palauttaa uusiVitsi-Vitsin.
+     *
+     */
+    
     public static Vitsi luoRivistaVitsi(String rivi) {
-        /*
-         * Metodi ottaa parametrinaan merkkijonoja. Metodi pilkkoo merkkijonon osiin ja
-         * passaa osat vitsi-luokan rakentajalle ja palauttaa uusiVitsi-Vitsin.
-         *
-         */;
+
         String[] vitsinpalat = rivi.split("///");
         int vitsintunniste = Integer.parseInt(vitsinpalat[0]);
         String vitsinlaji = vitsinpalat[1];
@@ -116,12 +131,17 @@ public class Kokoelma implements Kokoava<Dokumentti> {
         return uusiVitsi;
     }
 
+    /**
+     * 
+     * @param rivi
+     * @return uusiUutinen
+     * Metodi ottaa parametrinaan merkkijonoja, suorittaa samat toiminnot kuin
+     * vitsin kanssa, paitsi konvertoi uutisessa esiintyvän päivämäärän muotoon
+     * LocalDate.
+     */
+    
     public static Uutinen luoRivistaUutinen(String rivi) {
-        /*
-         * Metodi ottaa parametrinaan merkkijonoja, suorittaa samat toiminnot kuin
-         * vitsin kanssa, paitsi konvertoi uutisessa esiintyvän päivämäärän muotoon
-         * LocalDate.
-         */
+
 
         DateTimeFormatter pvmformaatti = DateTimeFormatter.ofPattern("d.M.yyyy");
         String[] uutisenpalat = rivi.split("///");
@@ -134,13 +154,17 @@ public class Kokoelma implements Kokoava<Dokumentti> {
     }
     
     
+    /**
+     * 
+     * @param rivi
+     * @return true / false
+     * Tämä metodi saa parametrinaan merkkijonon, ja se tarkistaa löytyykö
+     * merkkijonosta päivämäärä. Jos päivämäärä löytyy, voidaan merkkijonoa pitää
+     * uutisena ja palautetaan true, muuten palautetaan false.
+     */
+    
     public static Boolean onkoUutinen(String rivi) {
-        /*
-         * Tämä metodi saa parametrinaan merkkijonon, ja se tarkistaa löytyykö
-         * merkkijonosta päivämäärä. Jos päivämäärä löytyy, voidaan merkkijonoa pitää
-         * uutisena ja palautetaan true, muuten palautetaan false.
-         * 
-         */
+
         DateTimeFormatter pvmformaatti = DateTimeFormatter.ofPattern("d.M.yyyy");
         try {
             String[] uutisenpalat = rivi.split("///");
@@ -152,13 +176,20 @@ public class Kokoelma implements Kokoava<Dokumentti> {
         return true;
 
     }
+    
+    /**
+     * 
+     * @param komento
+     * @param kokoelma
+     * 
+     * Tämä metodi saa parametreinaan merkkijonon, jossa on hakusanoja ja kokoelman,
+     * josta hakusanat etsitään. Metodi käy läpi kokoelman, ja tulostaa niiden
+     * dokumenttien tunnisteet, joista se löysi hakusanoja vastaavia.
+     */
+
 
     public static void hakuSanoilla(String komento, Kokoelma kokoelma) {
-        /*
-         * Tämä metodi saa parametreinaan merkkijonon, jossa on hakusanoja ja kokoelman,
-         * josta hakusanat etsitään. Metodi käy läpi kokoelman, ja tulostaa niiden
-         * dokumenttien tunnisteet, joista se löysi hakusanoja vastaavia.
-         */
+
 
         // jos komennossa on liian vähän parametrejä, heitetään virhe
         if (komento.length() < 5) {
@@ -182,14 +213,21 @@ public class Kokoelma implements Kokoava<Dokumentti> {
 
     }
 
+    /**
+     * 
+     * @param komento
+     * @param kokoelma
+     *
+     * Metodi saa parametreinaan merkkijonona dokumentin tunnisteen ja kokoelman,
+     * muuntaa sen merkkijonosta tunnisteen kokonaisluvuksi ja poistaa kokoelmasta
+     * saadulla tunnisteella olevan dokumentin. Jos tunnisteella ei löydy
+     * dokumenttia tai parametriarvoja ei ole annettu, parametrejä on enemmän kuin
+     * yksi tai parametri on jotenkin viallinen, niin poistaminen epäonnistuu.
+     */
+
+    
     public static void poistaSana(String komento, Kokoelma kokoelma) {
-        /*
-         * Metodi saa parametreinaan merkkijonona dokumentin tunnisteen ja kokoelman,
-         * muuntaa sen merkkijonosta tunnisteen kokonaisluvuksi ja poistaa kokoelmasta
-         * saadulla tunnisteella olevan dokumentin. Jos tunnisteella ei löydy
-         * dokumenttia tai parametriarvoja ei ole annettu, parametrejä on enemmän kuin
-         * yksi tai parametri on jotenkin viallinen, niin poistaminen epäonnistuu.
-         */
+
 
         // tarkistetaan parametrit
         String[]komennonpalat = komento.split(" ");
@@ -214,12 +252,20 @@ public class Kokoelma implements Kokoava<Dokumentti> {
 
     }
     
+    /**
+     * 
+     * @param komento
+     * @param kokoelma
+     * @param sulkusanat
+     *      
+     * Metodi ottaa parametreina merkkijonon, kokoelman ja sulkusanojen tiedoston nimen.
+     * Metodi lukee sulkusanat LinkedListiin, jotta se voi passata ne dokumentti-luokan
+     * siivoa-metodille. 
+     */
+    
+    
     public static void siisti(String komento, Kokoelma kokoelma, String sulkusanat) {
-        /*
-         * Metodi ottaa parametreina merkkijonon, kokoelman ja sulkusanojen tiedoston nimen.
-         * Metodi lukee sulkusanat LinkedListiin, jotta se voi passata ne dokumentti-luokan
-         * siivoa-metodille. 
-         */
+
         
         //luodaan lukija sulkusanatiedostolle
         Scanner sulkusanalukija = null;
@@ -256,6 +302,11 @@ public class Kokoelma implements Kokoava<Dokumentti> {
     
     
     @Override
+    /**
+     * @param uusi
+     * Korvattu lisää-metodi. Lisää dokumenteihin uuden dokumentin. 
+     * 
+     */
     public void lisää(Dokumentti uusi) throws IllegalArgumentException {
         if (uusi == null || !(uusi instanceof Comparable<?>)) {
             throw new IllegalArgumentException("Kokoelman dokumentti virhellinen!");
@@ -268,7 +319,9 @@ public class Kokoelma implements Kokoava<Dokumentti> {
         dokumentit.lisää(uusi);
     }
 
-    /*
+    /**
+     * @param tunniste
+     * korvattu hae-metodi.
      * Hakee kokoelmasta dokumentin, jolla on sama tunniste kuin metodin parametrina
      * saatu kokonaisluku. Jos dokumenttia ei löydy, paluuarvo on null.
      */

@@ -9,6 +9,14 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
+/**
+ * Uutinen-luokka käsittelee uutinen-tyyppisiä dokumentteja. Uutisilla on LocalDate-muodossa oleva päivämäärä.
+ * 
+ * @author Eero Visuri
+ *
+ */
+
+
 public class Uutinen extends Dokumentti {
     // kätketty attribuutti
     private LocalDate päivämäärä;

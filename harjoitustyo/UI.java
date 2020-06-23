@@ -12,6 +12,17 @@ import harjoitustyo.dokumentit.Uutinen;
 import harjoitustyo.dokumentit.Vitsi;
 import harjoitustyo.kokoelma.Kokoelma;
 
+/**
+ * 
+ * @author Eero Visuri
+ * 
+ * UI-luokka sisältää käyttöliittymän ohjelmalle. Komennot on luokkavakioitu
+ * ja niitä kysellään käyttäjältä while-silmukassa. Luokasta kutsutaan Kokoelma-luokan
+ * metodeja. 
+ *
+ */
+
+
 public class UI {
     
 
@@ -36,15 +47,23 @@ public class UI {
     
     public static final String ALUSTA = "reset";
 
+    
+    /**
+     * 
+     * @param komento
+     * @param kokoelma
+     * 
+     * Tämä metodi saa parametrinaan komennon (joka on print tai
+     * print ja kokonaisluku) ja tulostettavan kokoelman. Metodi
+     * tulostaa joko koko kokoelman jos parametri oli pelkkä print,
+     * ja tunnisteen perusteella tietyn dokumentin jos toinen
+     * parametri oli kokonaisluku joka vastaa kokoelmasta löytyvää
+     * tunnistetta.
+     */
+
     public static void tulosta(String komento, Kokoelma kokoelma) {
 
-        /*
-         * Tämä metodi saa parametrinaan komennon (joka on print tai print ja
-         * kokonaisluku) ja tulostettavan kokoelman. Metodi tulostaa joko koko kokoelman
-         * jos parametri oli pelkkä print, ja tunnisteen perusteella tietyn dokumentin
-         * jos toinen parametri oli kokonaisluku joka vastaa kokoelmasta löytyvää
-         * tunnistetta.
-         */
+
 
         // pilkotaan komento paloihin
         String[] komennonpalat = komento.split(" ");
@@ -87,7 +106,14 @@ public class UI {
 
     }
 
-
+    /**
+     * 
+     * @param tiedostonnimi
+     * @param sulkusanat
+     * 
+     * Metodi käynnistää ohjelman käyttöliittymän ja lataa parametrinaan saamansa tiedoston 
+     * ja sulkusanat ohjelman rakenteisiin. 
+     */
     
     public void aloita(String tiedostonnimi, String sulkusanat) {
         // lippumuuttujat ohjelman suorittamiselle ja komentojen kaiuttamiselle
@@ -187,16 +213,16 @@ public class UI {
                 }
 
             }
-
+            //jos komento on etsi, kutsutaan kokoelma-luokan hakuSanoilla-metodia.
             else if (komento.contains(ETSI)) {
                 kokoelma.hakuSanoilla(komento, kokoelma);
             }
-
+            //jos komento on poista, kutsutaan kokoelma-luokan poistaSana-metodia. 
             else if (komento.contains(POISTA)) {
                 kokoelma.poistaSana(komento, kokoelma);
 
             }
-
+            //jos komento on siisti, kutsutaan kokoelma-luokan siisti-metodia. 
             else if (komento.contains(SIISTI)) {
                 String[] komennonpalat = komento.split(" ");
                 if (komennonpalat.length == 1 || komennonpalat.length > 2) {
@@ -206,14 +232,14 @@ public class UI {
                 kokoelma.siisti(komento, kokoelma, sulkusanat);
                 
             }
-
+            //jos komento on alusta, kutsutaan kokoelma-luokan lataaTiedosto-metodia.
             else if (komento.equals(ALUSTA)) {
                 // Lataa dokumenttitiedoston uudelleen ja poistaa aiemmin tehdyt muutokset.
                 // Jos komennolle annetaan parametrejä, tulostetaan virheilmoitus.
                 kokoelma = new Kokoelma();
                 kokoelma.lataaTiedosto(tiedostonnimi, kokoelma);
             }
-
+            //muuten voimme olettaa, että jotain meni pieleen.
             else {
                 System.out.println("Error!");
             }

@@ -9,12 +9,26 @@ import java.util.LinkedList;
 import harjoitustyo.apulaiset.Ooperoiva;
 import harjoitustyo.dokumentit.Dokumentti;
 
+/**
+ * 
+ * 
+ * 
+ * @author Eero Visuri
+ *
+ * @param <E>
+ * 
+ * OmaLista säilöö oliota käyttäen LinkedList-rakenteita.
+ * 
+ */
+
+
 public class OmaLista<E> extends LinkedList<E> implements Ooperoiva<E> {
 
     // Hiljennetään
     @SuppressWarnings("unchecked")
 
-    /*
+    /**
+     * @param uusi
      * Lisätään oliot listaan compareTo-metodilla vertaillen, jos paluuarvo on 0,
      * vertailussa on olleet samat oliot, jolloin jatketaan. Jos paluuarvo on < 0,
      * lisätään alkio indeksiin i.

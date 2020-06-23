@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
 
 import harjoitustyo.kokoelma.*;
-import jdk.javadoc.internal.tool.resources.javadoc;
 import harjoitustyo.dokumentit.Dokumentti;
 import harjoitustyo.dokumentit.Uutinen;
 import harjoitustyo.dokumentit.Vitsi;
@@ -63,10 +62,12 @@ public class Oope2HT {
     }
     
     /**
-     * main tarkistaa käynnistysparametrit ja ajaa käyttöliittymän.
+     * 
      * @param args ottaa käynnistysriviparametrit
+     * 
+     * main tarkistaa käynnistysparametrit ja ajaa käyttöliittymän.
      */
-
+    
 
     public static void main(String[] args) {
         // tarkastetaan komentorivin käynnistysparametrit

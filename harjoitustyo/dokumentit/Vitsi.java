@@ -8,6 +8,13 @@ package harjoitustyo.dokumentit;
 //import java.lang.reflect.Constructor;
 import java.util.LinkedList;
 
+/**
+ * Vitsi-luokka käsittelee vitsi-muotoisia dokumentteja. Vitseillä on String-tyyppinen laji-attribuutti. 
+ * @author Eero Visuri
+ *
+ */
+
+
 public class Vitsi extends Dokumentti {
 
     // attribuutti

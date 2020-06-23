@@ -12,6 +12,15 @@ import java.util.LinkedList;
 import java.util.*;
 import java.time.*;
 
+/**
+ * Dokumentti-luokka käsittelee dokumentteja. Dokumenteilla on int-muotoinen tunniste
+ * ja itse teksti on String teksti-muodossa. Dokumentteja vertaillaan tunnisteita vertailemalla.
+ * @author Eero Visuri
+ * 
+ *
+ */
+
+
 public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Dokumentti> {
 
     /*
@@ -60,7 +69,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         this.tunniste = tunniste;
     }
 
-    /*
+    /**
      * Korvattu equals-metodi siten, että dokumentit katsotaan samoiksi, jos niiden
      * tunnisteet ovat sama kokonaisluku, jolloin equals palauttaa true. Muutoin se
      * palauttaa false. Try-catch muodossa jotta ei kaadu null-arvoihin.
@@ -80,7 +89,8 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
 
     }
 
-    /*
+    /**
+     * @param T
      * Korvattu compareTo-metodi, joka vertailee parametrina saatua Dokumentti
      * T-tunnistetta. Jos tunnisteet ovat samat, se palauttaa 0, jos tunniste on >
      * T.tunniste, se palauttaa 1, muuten -1. Metodilla voi päätellä, mihin kohtaan
@@ -97,7 +107,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         return 0;
     }
 
-    /*
+    /**
      * Korvattu toString()-metodi siten, että se palauttaa tunnisteen ja tekstin
      * eroteltuna merkkijonolla "///".
      */
@@ -106,7 +116,9 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         return tunniste + "///" + teksti;
     }
 
-    /*
+    /**
+     * @param hakusanat
+     * @return true / false
      * Tämä metodi etsii toisena parametrinaan saamasta teksti-muuttujasta
      * ensimmäisenä parametrinaan saatuja hakusanoja, jos se löytää hakusanat
      * tekstistä, se palauttaa true, muuten false.
@@ -144,7 +156,7 @@ public abstract class Dokumentti implements Comparable<Dokumentti>, Tietoinen<Do
         return true;
     }
 
-    /*
+    /**
      * Metodi poistaa ensin dokumentin tekstistä kaikki annetut välimerkit ja
      * muuntaa sitten kaikki kirjainmerkit pieniksi ja poistaa lopuksi kaikki
      * sulkusanojen esiintymät.
