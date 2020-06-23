@@ -1,4 +1,4 @@
-package harjoitustyo;
+package harjoitustyo.kayttoliittyma;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -16,14 +16,14 @@ import harjoitustyo.kokoelma.Kokoelma;
  * 
  * @author Eero Visuri
  * 
- * UI-luokka sisältää käyttöliittymän ohjelmalle. Komennot on luokkavakioitu
+ * Kayttoliittyma-luokka sisältää käyttöliittymän ohjelmalle. Komennot on luokkavakioitu
  * ja niitä kysellään käyttäjältä while-silmukassa. Luokasta kutsutaan Kokoelma-luokan
  * metodeja. 
  *
  */
 
 
-public class UI {
+public class Kayttoliittyma {
     
 
     // importataan lukija
@@ -120,8 +120,6 @@ public class UI {
         boolean suoritetaan = true;
         boolean kaiutetaan = false;
 
-        // tulostetaan tervehdys
-        System.out.println("Welcome to L.O.T.");
 
 
 
